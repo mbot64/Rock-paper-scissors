@@ -9,59 +9,37 @@ window.title("RPS")
 user = ""
 winner = ""
 Wins = ""
-#NOTE: A function that determines whether the user wins or not
-#      Passes the user's choice (based on what button they click)to the parameter
+comp_choice = ""
+#computer_wins = ""
+
+def choice_to_number(choice):
+    rps = {'rock':0,'paper':1,'scissors':2}
+    return rps[choice]
+
+
 def get_winner(user):
     # Access variables declared after the function so that the variables can be changed inside of the function
     global Wins, user_wins, output, computer_wins, winner
     #print(user)
-    # 1. Create random integer 1-3 to use as computer's play
-    computers_play = randint(1,3)
 
-    # 2. Using if-statements, assign the computer to a choice (rock, paper, scissors) using the random integer generated
-    if computers_play == 1:
-        computers_play = "rock"
-    elif computers_play == 2:
-        computers_play = "paper"
-    elif computers_play == 3:
-        computers_play = "scissors"
+    comp_choice = random.choice(['rock','paper','scissor'])
 
-    # 3. Determine the winner based on what the user chose and what the computer chose
-    if user == "rock":
-        # if computers_play == "rock":
-        #     winner = "It was a tie!"
-        if computers_play == "paper":
-            winner = "The computer won."
-        elif computers_play == "sicssors":
-            winner = "You won!"
-    elif user == "paper":
-        # if computers_play == "paper":
-        #     winner = "It was a tie!"
-        if computers_play == "scissors":
-            winner = "The computer won."
-        elif computers_play == "rock":
-            winner = "You won!"
-    elif user == "scissors":
-        # if computers_play == "scissors":
-        #     winner = "It was a tie!"
-        if computers_play == "rock":
-            winner = "The computer won."
-        elif computers_play == "paper":
-            winner = "You won!"
+    use=choice_to_number(user)
+    comp=choice_to_number(comp_choice)
+    if(use==comp):
+        winner = "It was a tie"
+    elif((use-comp)%3==1):
+        winner = "You win!"
+        user_wins+=1
+    else:
+        winner = "The computer wins"
+        computer_wins+=1
 
-    if user == computers_play:
-        winner = "It was a tie! "
-
-    # If the user wins, increase win by 1
-    if winner == "You won!":
-        user_wins += 1
-    if winner == "The computer won.":
-        computer_wins += 1
     # Use the output label to write what the computer did and what the result was (win, loss, tie)
     Wins = tk.Label(text = "Users score: " + str(user_wins))
     Computer_wins = tk.Label(text = "Computer's score: " + str(computer_wins))
-    answer = tk.Label(text="Your choice: {uc} \n The computer chose: {cc} \n {w}".format(uc=user,cc=computers_play,w=winner))
-    answer.grid(column=1, row=3)
+    Result = tk.Label(text="Your choice: {uc} \n The computer chose: {cc} \n {w}".format(uc=user,cc=comp_choice,w=winner))
+    Result.grid(column=1, row=3)
     Wins.grid(column=1, row=2)
     Computer_wins.grid(column=1, row=4)
 
@@ -84,6 +62,7 @@ computer_wins = 0
 def user_is_rock():
     user = "rock"
     get_winner(user)
+
 
 
 
